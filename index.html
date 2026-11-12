@@ -1369,7 +1369,7 @@ function routeFromHash(){var h=(location.hash||'#home').slice(1);return ROUTES.i
 function setActiveNav(r){$$('[data-r]').forEach(function(a){a.classList.toggle('on',a.getAttribute('data-r')===r)})}
 function applyRoute(){
   var r=routeFromHash(),page=r==='contact'?'home':r;
-  if(first){introOn=(r==='home'&&!REDUCED&&gl_ok);first=false}
+  if(first){introOn=false;first=false} /* book intro removed: the site opens directly on Home */
   else if(r!=='home'||page!=='home'){introOn=false}
   cur=page;
   track.classList.toggle('nointro',!introOn);
