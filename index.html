@@ -82,11 +82,12 @@ h1,h2,h3{text-wrap:balance}
 .fadm i{font:800 10.5px var(--f-ui);font-style:normal;min-width:20px;height:20px;border-radius:10px;background:var(--goldgrad);color:#1a1203;display:grid;place-items:center;padding:0 6px}
 .adm svg{width:15px;height:15px;stroke:#1a1203}
 .adm i{font:800 10.5px var(--f-ui);font-style:normal;min-width:20px;height:20px;border-radius:10px;background:#1a1203;color:var(--gold-l);display:grid;place-items:center;padding:0 6px;letter-spacing:0}
-.tp{white-space:nowrap;display:inline-flex;align-items:center;gap:10px;font:700 12px var(--f-ui);letter-spacing:.18em;text-transform:uppercase;padding:11px 20px;color:var(--silver-l);border:1px solid var(--silver-d);border-radius:6px;position:relative;transition:.3s;background:rgba(255,255,255,.02)}
-.tp::before,.tp::after{content:"";position:absolute;width:8px;height:8px;border:1px solid var(--gold)}
-.tp::before{top:-4px;left:-4px;border-right:0;border-bottom:0}.tp::after{bottom:-4px;right:-4px;border-left:0;border-top:0}
-.tp svg{width:15px;height:15px;stroke:var(--gold)}
-.tp:hover,.tp.on{border-color:var(--gold);color:var(--gold-l);box-shadow:0 0 24px -4px rgba(212,175,55,.45)}
+.tp{white-space:nowrap;display:inline-flex;align-items:center;gap:12px;font:800 11.5px var(--f-ui);letter-spacing:.18em;text-transform:uppercase;padding:7px 22px 7px 8px;color:var(--gold-l);border:1px solid transparent;border-radius:999px;position:relative;overflow:hidden;isolation:isolate;transition:transform .3s,box-shadow .3s,color .3s;background:linear-gradient(#0b1224,#0b1224) padding-box,linear-gradient(120deg,var(--gold-l),var(--gold) 35%,var(--silver-l) 60%,var(--gold)) border-box;box-shadow:0 10px 26px -12px rgba(212,175,55,.65),inset 0 0 18px rgba(212,175,55,.08)}
+.tp::before{content:none}
+.tp::after{content:"";position:absolute;top:0;bottom:0;left:-70%;width:45%;z-index:-1;background:linear-gradient(100deg,transparent,rgba(255,236,170,.28),transparent);transform:skewX(-20deg);animation:tpshine 4.2s ease-in-out infinite}
+@keyframes tpshine{0%,55%{left:-70%}100%{left:130%}}
+.tp svg{width:28px;height:28px;padding:6px;border-radius:50%;flex:none;stroke:#1a1203;background:var(--goldgrad);box-shadow:0 0 0 3px rgba(212,175,55,.16),0 4px 10px -2px rgba(0,0,0,.6)}
+.tp:hover,.tp.on{transform:translateY(-2px);color:#fff;box-shadow:0 14px 34px -10px rgba(212,175,55,.85),inset 0 0 22px rgba(212,175,55,.16)}
 .burger{display:none;justify-self:end;width:46px;height:46px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.03);align-items:center;justify-content:center}
 .burger svg{width:22px;height:22px;stroke:var(--gold-l)}
 .mnav{position:fixed;inset:0;z-index:99;background:rgba(5,9,19,.96);backdrop-filter:blur(18px);display:none;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:calc(var(--hh) + var(--mq,0px) + env(safe-area-inset-top,0px)) 24px 40px}
@@ -261,6 +262,30 @@ main{position:relative;z-index:2}
 .mq-i{white-space:nowrap;font:600 12.5px var(--f-ui);letter-spacing:.16em;text-transform:uppercase;background:var(--goldgrad);background-size:220% auto;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
 .mq-d{width:7px;height:7px;margin:0 28px;transform:rotate(45deg);background:var(--silvergrad);flex:none}
 @keyframes mqmove{to{transform:translateX(-50%)}}
+/* support assistant */
+.sa-fab{position:fixed;right:max(18px,env(safe-area-inset-right,0px));bottom:max(18px,env(safe-area-inset-bottom,0px));z-index:95;display:inline-flex;align-items:center;gap:10px;padding:14px 20px;border-radius:999px;border:0;cursor:pointer;background:var(--goldgrad);color:#1a1203;font:800 11.5px var(--f-ui);letter-spacing:.16em;text-transform:uppercase;box-shadow:0 14px 34px -10px rgba(212,175,55,.55),0 0 0 1px rgba(255,255,255,.25) inset;transition:transform .25s}
+.sa-fab:hover{transform:translateY(-3px)}.sa-fab svg{width:18px;height:18px;stroke:#1a1203}
+.sa{position:fixed;right:max(18px,env(safe-area-inset-right,0px));bottom:calc(max(18px,env(safe-area-inset-bottom,0px)) + 62px);z-index:96;width:min(390px,calc(100vw - 32px));height:min(560px,calc(100vh - 130px));display:flex;flex-direction:column;border-radius:20px;overflow:hidden;background:#0a1020;border:1px solid var(--gold);box-shadow:0 40px 90px -30px rgba(0,0,0,.95),0 0 0 6px rgba(5,9,19,.6)}
+.sa-h{display:flex;align-items:center;gap:12px;padding:14px 16px;background:linear-gradient(90deg,#16120a,#0e1630);border-bottom:1px solid var(--line)}
+.sa-h .brand-logo{width:34px;height:34px}
+.sa-h b{display:block;font:700 15px var(--f-display);letter-spacing:.06em;color:var(--gold-l)}.sa-h small{display:block;font:600 10px var(--f-ui);letter-spacing:.16em;text-transform:uppercase;color:var(--silver-d)}
+.sa-h button{margin-left:auto;width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:transparent;color:var(--silver-l);cursor:pointer;display:grid;place-items:center}
+.sa-h button svg{width:16px;height:16px;stroke:currentColor}
+.sa-log{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px}
+.sa-m{max-width:86%;padding:11px 14px;border-radius:14px;font:500 14px/1.5 var(--f-ui);overflow-wrap:anywhere}
+.sa-m.bot{align-self:flex-start;background:#141c36;color:#e6e9f2;border:1px solid var(--line);border-bottom-left-radius:4px}
+.sa-m.me{align-self:flex-end;background:var(--goldgrad);color:#1a1203;border-bottom-right-radius:4px;font-weight:600}
+.sa-go{margin-top:10px;display:inline-block;padding:8px 14px;border-radius:999px;border:1px solid var(--gold);background:transparent;color:var(--gold-l);font:700 10.5px var(--f-ui);letter-spacing:.14em;text-transform:uppercase;cursor:pointer}
+.sa-go:hover{background:rgba(212,175,55,.12)}
+.sa-chips{display:flex;flex-wrap:wrap;gap:8px;padding:0 16px 12px}
+.sa-chips button{padding:8px 12px;border-radius:999px;border:1px solid var(--line);background:#0f1730;color:var(--silver-l);font:600 12px var(--f-ui);cursor:pointer;text-align:left}
+.sa-chips button:hover{border-color:var(--gold);color:var(--gold-l)}
+.sa-note{margin:0;padding:8px 14px 0;background:#080d1b;border-top:1px solid var(--line);font:500 10.5px/1.4 var(--f-ui);color:var(--silver-d)}
+.sa form{display:flex;gap:8px;padding:8px 12px 12px;background:#080d1b}
+.sa form input{flex:1;min-width:0;padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:#0f1730;color:#fff;font:500 14px var(--f-ui)}
+.sa form button{width:46px;border-radius:12px;border:0;background:var(--goldgrad);cursor:pointer;display:grid;place-items:center}
+.sa form button svg{width:18px;height:18px;stroke:#1a1203}
+@media (max-width:640px){.sa{left:12px;right:12px;width:auto;bottom:calc(max(14px,env(safe-area-inset-bottom,0px)) + 60px)}.sa-fab span{display:none}.sa-fab{padding:15px}}
 /* notice board */
 .board{position:relative;border-radius:24px;padding:44px 40px;background:radial-gradient(120% 140% at 15% 0%,#12594a,#0b3328 55%,#071f19);border:1px solid var(--gold);box-shadow:inset 0 0 0 7px rgba(5,9,19,.75),inset 0 0 0 8px var(--line),0 40px 90px -40px rgba(0,0,0,.95)}
 .board::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background-image:radial-gradient(rgba(255,255,255,.05) 1px,transparent 1.2px);background-size:7px 7px;opacity:.7}
@@ -378,7 +403,7 @@ details.bulk textarea{margin:8px 0;min-height:110px;font-size:12.5px}
 .toast{position:fixed;left:50%;bottom:max(28px,env(safe-area-inset-bottom,0px));transform:translate(-50%,30px);z-index:300;max-width:min(92vw,460px);padding:15px 24px;border-radius:12px;background:#0d1730;border:1px solid var(--gold);color:var(--ink);font:600 14px var(--f-ui);opacity:0;pointer-events:none;transition:.4s;box-shadow:0 20px 50px -10px rgba(0,0,0,.8)}
 .toast.show{opacity:1;transform:translate(-50%,0)}
 
-@media (max-width:1240px){.nav a{padding:10px 13px;letter-spacing:.14em}.hdr-in{gap:12px}.tp{padding:11px 14px;letter-spacing:.12em}}
+@media (max-width:1240px){.nav a{padding:10px 13px;letter-spacing:.14em}.hdr-in{gap:12px}.tp{padding:6px 16px 6px 6px;letter-spacing:.12em}}
 @media (max-width:1020px){
   .hdr-in{grid-template-columns:1fr auto}
   .nav,.hdr .tp,.hdr .adm{display:none}
@@ -416,6 +441,7 @@ details.bulk textarea{margin:8px 0;min-height:110px;font-size:12.5px}
   .note{padding:26px 22px}
 }
 @media (prefers-reduced-motion:reduce){
+  .tp::after{animation:none;display:none}
   .paper,.paper:hover{transition:none}
   .gold,.silver{animation:none}.rv{opacity:1;transform:none;transition:none}.page.active{animation:none}
 }
@@ -423,6 +449,7 @@ details.bulk textarea{margin:8px 0;min-height:110px;font-size:12.5px}
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
 <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4.5 6v5.5c0 4.6 3.1 8.2 7.5 9.5 4.4-1.3 7.5-4.9 7.5-9.5V6z"/><path d="m9 12 2.2 2.2L15.5 10"/></symbol>
+<symbol id="i-cap" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11.5V16c0 1.5 2.7 3 6 3s6-1.5 6-3v-4.5"/><path d="M22 9v6"/></symbol>
 <symbol id="i-lock" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></symbol>
 <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
 <symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
@@ -472,7 +499,7 @@ details.bulk textarea{margin:8px 0;min-height:110px;font-size:12.5px}
       <a href="#contact" data-r="contact">Contact</a>
     </nav>
     <div class="hdr-r">
-      <a class="tp" href="#teachers" data-r="teachers"><svg aria-hidden="true"><use href="#i-lock"/></svg>Teacher's Portal</a>
+      <a class="tp" href="#teachers" data-r="teachers"><svg aria-hidden="true"><use href="#i-cap"/></svg>Teacher's Portal</a>
       <button class="burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false"><svg aria-hidden="true"><use href="#i-menu"/></svg></button>
     </div>
   </div>
@@ -483,7 +510,7 @@ details.bulk textarea{margin:8px 0;min-height:110px;font-size:12.5px}
   <a href="#materials" data-r="materials">Materials</a>
   <a href="#join" data-r="join">Join</a>
   <a href="#contact" data-r="contact">Contact</a>
-  <a class="tp" href="#teachers" data-r="teachers"><svg aria-hidden="true"><use href="#i-lock"/></svg>Teacher's Portal</a>
+  <a class="tp" href="#teachers" data-r="teachers"><svg aria-hidden="true"><use href="#i-cap"/></svg>Teacher's Portal</a>
 </div>
 
 <main>
@@ -682,6 +709,14 @@ details.bulk textarea{margin:8px 0;min-height:110px;font-size:12.5px}
   <div class="ftr-bot"><span>© 2026 Edu M8. All rights reserved.</span><span>Soulmate For Your Learning</span></div>
 </footer>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
+<button class="sa-fab" id="saFab" type="button" aria-label="Open support assistant" aria-expanded="false" aria-controls="saPanel"><svg aria-hidden="true"><use href="#i-chat"/></svg><span>Support</span></button>
+<section class="sa" id="saPanel" role="dialog" aria-label="Support assistant" hidden>
+  <div class="sa-h"><span class="brand-logo" role="img" aria-label="Edu M8 logo"></span><div><b>Support Assistant</b><small>Quick answers about Edu M8</small></div><button type="button" id="saClose" aria-label="Close support assistant"><svg aria-hidden="true"><use href="#i-x"/></svg></button></div>
+  <div class="sa-log" id="saLog" role="log" aria-live="polite"></div>
+  <div class="sa-chips" id="saChips"></div>
+  <p class="sa-note">Questions we cannot answer may be saved so we can improve this assistant. Please do not share personal details.</p>
+  <form id="saForm" autocomplete="off"><input id="saIn" maxlength="200" placeholder="Type your question" aria-label="Type your question"><button type="submit" aria-label="Send"><svg aria-hidden="true"><use href="#i-arrow"/></svg></button></form>
+</section>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
@@ -715,10 +750,31 @@ var SITE_DEFAULTS={
   "adminHash": "7c28cc8c52b15f88b2fdf9082e5ccc4067482dd55e5f8db57d8046b697534b00"
 };
 var DEFAULTS=SITE_DEFAULTS;
+var DEFAULT_FAQ=[
+ {q:'Where can I find study materials?',k:'notes pdf download question bank worksheet guide ppt docx books papers study material',a:'Open the Materials page, pick your class (IX to XII) and a category: Notes, Question Banks, Worksheet / Practice, Guide or Others. Files are available as PDF, PPT or DOCX.',l:'materials'},
+ {q:'How do I join the WhatsApp community?',k:'whatsapp group community join link elite groups',a:'Open the Join page. Use the Class IX & X or Class XI & XII button to enter the WhatsApp community, then join the group for your grade from Our Groups.',l:'join'},
+ {q:'How can teachers get access to the Teacher\'s Portal?',k:'teacher faculty portal access login lesson plan blueprint request form',a:'Go to the Teacher\'s Portal and fill in the Teacher Access Form with your details and a proof of your teaching role. After review you receive an email and password to log in.',l:'teachers'},
+ {q:'I forgot my teacher password',k:'teacher password reset forgot login problem',a:'Please send us a message from the Contact section with your registered email, and we will help you with your login.',l:'contact'},
+ {q:'How can I contact you?',k:'contact phone call number help clarification email message reach support',a:'For material clarifications you can call {phone}, or send us a message from the Contact section on the Home page.',l:'contact'},
+ {q:'Which classes do you cover?',k:'class grade standard ix x xi xii 9 10 11 12 syllabus',a:'Edu M8 covers Class IX, X, XI and XII, with materials and learner communities for each class.',l:'materials'},
+ {q:'What is Edu M8?',k:'about edu m8 who what education community soulmate',a:'Edu M8 is an education community offering premium study materials and learner communities for Class IX to XII.',l:''},
+ {q:'How do I download a file?',k:'download open save file view pdf get material',a:'On the Materials page choose your class, open a category such as Notes or Question Banks, and tap the file. PDFs open or download straight away, and PPT or DOCX files open in the app on your device.',l:'materials'},
+ {q:'Which file types are available?',k:'file type format pdf ppt docx word powerpoint',a:'Materials are shared as PDF, PPT (PowerPoint) or DOCX (Word) files.',l:'materials'},
+ {q:'A material I need is missing',k:'missing request not available want more need other subject chapter add upload',a:'Send us a message from the Contact section with your class, subject and chapter, and we will try to add it. You can also ask in your class WhatsApp group.',l:'contact'},
+ {q:'What is inside the Teacher\'s Portal?',k:'teacher portal inside lesson plan blueprint content what available',a:'After a teacher logs in, the portal shows lesson plans and blueprints that are shared for teachers only.',l:'teachers'},
+ {q:'What is the difference between a community and a group?',k:'community group difference whatsapp class grade ix x xi xii',a:'The Class IX & X and Class XI & XII buttons open the main WhatsApp communities. Under Our Groups on the Join page you can also join the group for your own grade, from Grade 09 to Grade 12.',l:'join'},
+ {q:'Is it free?',k:'free cost fee price charge paid money payment',a:'Our WhatsApp groups share free resources. For anything else about fees, please contact us.',l:'contact'},
+ {q:'What are Question Banks and Worksheets?',k:'question bank worksheet practice difference guide notes what meaning',a:'Notes explain the chapters. Question Banks collect practice questions for exam preparation, Worksheets are practice sheets, and Guides help you revise.',l:'materials'},
+ {q:'How should I study with these materials?',k:'study tip how plan revise prepare exam strategy',a:'A good order is Notes first, then Worksheets and Question Banks for practice, and Guides for last-minute revision.',l:''},
+ {q:'Does the website work on my phone?',k:'mobile phone android iphone app tablet device',a:'Yes, the website works on phones, tablets and computers. Files open in your device\'s PDF or document app.',l:''},
+ {q:'The WhatsApp link is not working',k:'link broken not working expired invalid full whatsapp join problem error',a:'Links can change. Please send us a message from the Contact section and we will help you join.',l:'contact'},
+ {q:'Where can I find exam dates or results?',k:'exam date timetable result board cbse icse syllabus schedule',a:'We do not publish exam dates or results here. Please check your school or your board\'s official website.',l:''}
+];
+function sdFaq(){return DEFAULT_FAQ.map(function(x){return Object.assign({},x)})}
 function sdCfg(){return {phone:SITE_DEFAULTS.phone,communityLinks:Object.assign({},SITE_DEFAULTS.communityLinks),groupLinks:Object.assign({},SITE_DEFAULTS.groupLinks),formEndpoint:SITE_DEFAULTS.formEndpoint||''}}
 function sdAnn(){var a=SITE_DEFAULTS.announce||{};return{showBoard:a.showBoard!==false,marquee:(a.marquee||[]).slice(),notices:(a.notices||[]).map(function(x){return Object.assign({},x)})}}
 function sdMats(){var o={},m=SITE_DEFAULTS.materials||{};Object.keys(m).forEach(function(k){var v=m[k];if(Array.isArray(v))o[k]={items:v};else if(typeof v==='string'&&v)o[k]={url:v}});return o}
-var STATE={cfg:sdCfg(),mats:sdMats(),isAdmin:false,db:null,uid:null,assets:null,inbox:[],capsDone:false,hasRuntime:false,hasUser:false,mode:'cloud',teachers:(SITE_DEFAULTS.teachers||[]).slice(),teach:Object.assign({},SITE_DEFAULTS.teach||{}),ann:sdAnn()};
+var STATE={cfg:sdCfg(),mats:sdMats(),isAdmin:false,db:null,uid:null,assets:null,inbox:[],capsDone:false,hasRuntime:false,hasUser:false,mode:'cloud',teachers:(SITE_DEFAULTS.teachers||[]).slice(),teach:Object.assign({},SITE_DEFAULTS.teach||{}),ann:sdAnn(),faq:(SITE_DEFAULTS.faq&&SITE_DEFAULTS.faq.length?SITE_DEFAULTS.faq:sdFaq()),aiUrl:SITE_DEFAULTS.aiEndpoint||''};
 var ROM={9:'IX',10:'X',11:'XI',12:'XII'};
 var CATS=[['Notes','i-notes','notes'],['Question Banks','i-bank','qbank'],['Worksheet / Practice','i-pencil','worksheet'],['Guide','i-compass','guide'],['Others','i-grid','others']];
 var TYPES=['PDF','PPT','DOCX'];
@@ -921,9 +977,9 @@ function renderAdmin(){
     el('div',{class:'stats'},
       [[newN,'New in inbox'],[teachN,'Teacher requests waiting'],[links+' / 6','WhatsApp links set'],[docCount(),'Documents added']].map(function(x){return el('div',{class:'card stat'},el('b',{class:'gold',text:String(x[0])}),el('span',{text:x[1]}))})),
     el('div',{class:'tabs',role:'tablist'},
-      [['inbox','Inbox'],['links','Links & contact'],['materials','Materials'],['teachers','Teachers'],['announce','Notices'],['text','Site text']].concat(STATE.mode==='local'?[['backup','Backup & publish']]:[]).map(function(t){return el('button',{type:'button',role:'tab','aria-selected':ADM.tab===t[0]?'true':'false',text:t[1],onclick:function(){ADM.tab=t[0];renderAdmin()}})})),
+      [['inbox','Inbox'],['links','Links & contact'],['materials','Materials'],['teachers','Teachers'],['announce','Notices'],['text','Site text'],['faq','AI Support']].concat(STATE.mode==='local'?[['backup','Backup & publish']]:[]).map(function(t){return el('button',{type:'button',role:'tab','aria-selected':ADM.tab===t[0]?'true':'false',text:t[1],onclick:function(){ADM.tab=t[0];renderAdmin()}})})),
     STATE.mode==='local'?el('p',{class:'help',style:'text-align:center;margin:-8px 0 22px',text:'Standalone mode: changes are saved in this browser. Open “Backup & publish” to make them live for every visitor.'}):null,
-    ADM.tab==='inbox'?tabInbox():ADM.tab==='links'?tabLinks():ADM.tab==='materials'?tabMaterials():ADM.tab==='teachers'?tabTeachers():ADM.tab==='announce'?tabAnnounce():ADM.tab==='text'?tabText():tabBackup()
+    ADM.tab==='inbox'?tabInbox():ADM.tab==='links'?tabLinks():ADM.tab==='materials'?tabMaterials():ADM.tab==='teachers'?tabTeachers():ADM.tab==='announce'?tabAnnounce():ADM.tab==='text'?tabText():ADM.tab==='faq'?tabFaq():tabBackup()
   );
   window.scrollTo(0,keep);
 }
@@ -1153,6 +1209,94 @@ function tabAnnounce(){
   });
   return el('div',null,vis,m,n);
 }
+var SA={stop:{}};'a an the is are am was were be to of for in on at by and or my me i you your do does can could how what where when which who why it this that please tell about with from will would should have has get want need hi hello hey'.split(' ').forEach(function(w){SA.stop[w]=1});
+function saStem(w){w=w.replace(/sses$/,'ss').replace(/(ing|ed)$/,'');if(w.length>3&&/[^s]s$/.test(w))w=w.slice(0,-1);return w}
+function saToks(t){return String(t||'').toLowerCase().replace(/[^a-z0-9\s]/g,' ').split(/\s+/).filter(function(w){return w&&!SA.stop[w]}).map(saStem).filter(function(w){return w.length>1||/^\d$/.test(w)})}
+function saAnswer(q){
+  var low=q.toLowerCase().trim();
+  if(/^(hi|hello|hey|namaste|good (morning|afternoon|evening))\b/.test(low)&&low.split(/\s+/).length<=3)return{a:'Hello! I can help with materials, joining our WhatsApp groups, teacher access and contact details. What would you like to know?'};
+  if(/^(thanks|thank you|thx|ok thanks)/.test(low))return{a:'You are welcome! Ask me anything else about Edu M8.'};
+  var ut=saToks(q),best=null,bs=0;
+  STATE.faq.forEach(function(it){var sc=0,qs={},ks={};saToks(it.q).forEach(function(w){qs[w]=1});saToks(it.k).forEach(function(w){ks[w]=1});
+    ut.forEach(function(w){if(ks[w])sc+=2;else if(qs[w])sc+=1});if(sc>bs){bs=sc;best=it}});
+  if(best&&(bs>=2||(bs>=1&&ut.length<=2)))return{a:String(best.a||''),l:best.l};
+  return{a:'I could not find an exact answer to that. You can send us a message from the Contact section, or call {phone}.',l:'contact',miss:true};
+}
+function initAssistant(){
+  var fab=$('#saFab'),panel=$('#saPanel'),log=$('#saLog'),chips=$('#saChips'),inp=$('#saIn'),greeted=false;
+  var LBL={materials:'Open Materials',join:'Open Join page',teachers:"Open Teacher's Portal",contact:'Go to Contact'};
+  function fill(m,text,link,note){
+    m.textContent=String(text).replace('{phone}',STATE.cfg.phone||'');
+    if(note)m.append(el('br'),el('small',{style:'opacity:.7;font-size:11px',text:note}));
+    if(link&&LBL[link])m.append(el('br'),el('button',{class:'sa-go',type:'button',text:LBL[link],onclick:function(){close();location.hash='#'+link;if(link==='contact')setTimeout(function(){var c=$('#contact');if(c)c.scrollIntoView({behavior:'smooth'})},300)}}));
+    log.scrollTop=log.scrollHeight;
+  }
+  function say(who,text,link){var m=el('div',{class:'sa-m '+who});log.append(m);fill(m,text,who==='bot'?link:'');return m}
+  SA.hist=[];SA.logged=0;
+  function logMiss(q,ai){if(SA.logged>=5||!STATE.db||!STATE.uid)return;SA.logged++;addInbox({kind:'unanswered',message:q.slice(0,200),ai:!!ai}).catch(function(){})}
+  function push(role,content){SA.hist.push({role:role,content:String(content).slice(0,500)});if(SA.hist.length>6)SA.hist.shift()}
+  async function aiAsk(q){
+    var ctl=new AbortController(),t=setTimeout(function(){ctl.abort()},25000);
+    try{var r=await fetch(STATE.aiUrl,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({question:q.slice(0,300),history:SA.hist.slice(-4)}),signal:ctl.signal});
+      if(!r.ok)throw new Error('http');var d=await r.json();if(!d||typeof d.answer!=='string'||!d.answer.trim())throw new Error('empty');return d.answer.trim()}
+    finally{clearTimeout(t)}
+  }
+  function ask(q){
+    q=String(q).trim();if(!q)return;say('me',q);var r=saAnswer(q);
+    if(!r.miss){push('user',q);push('assistant',r.a);setTimeout(function(){say('bot',r.a,r.l)},350);return}
+    if(STATE.aiUrl&&/^https:\/\//.test(STATE.aiUrl)){
+      var m=say('bot','Thinking…');
+      aiAsk(q).then(function(ans){push('user',q);push('assistant',ans);fill(m,ans,'','AI-generated answer. It can make mistakes.');logMiss(q,true)})
+        .catch(function(){fill(m,r.a,r.l);logMiss(q,false)});
+      return;
+    }
+    logMiss(q,false);setTimeout(function(){say('bot',r.a,r.l)},350);
+  }
+  function drawChips(){chips.textContent='';STATE.faq.slice(0,4).forEach(function(it){chips.append(el('button',{type:'button',text:it.q,onclick:function(){ask(it.q)}}))})}
+  function open(){panel.hidden=false;fab.setAttribute('aria-expanded','true');fab.hidden=false;if(!greeted){greeted=true;say('bot','Hello! I am the Edu M8 support assistant. Ask me about study materials, joining our groups, teacher access or contact details.')}drawChips();inp.focus()}
+  function close(){panel.hidden=true;fab.setAttribute('aria-expanded','false');fab.focus()}
+  fab.addEventListener('click',function(){panel.hidden?open():close()});
+  $('#saClose').addEventListener('click',close);
+  panel.addEventListener('keydown',function(e){if(e.key==='Escape')close()});
+  $('#saForm').addEventListener('submit',function(e){e.preventDefault();var v=inp.value;inp.value='';ask(v)});
+  SA.redraw=function(){if(!panel.hidden)drawChips()};
+}
+function tabFaq(){
+  var items=STATE.faq.map(function(x){return Object.assign({},x)}),rows=[];
+  if(ADM.faqNew){items.unshift({q:ADM.faqNew,k:'',a:'',l:''});ADM.faqNew=null}
+  var LK=[['','No button'],['materials','Materials'],['join','Join'],['teachers',"Teacher's Portal"],['contact','Contact']];
+  async function persist(list){try{await STATE.db.doc('site/faq').set({items:list,ai:STATE.aiUrl||''});return true}catch(e){toast('Could not save. Please try again.');return false}}
+  function collect(){return rows.map(function(r){return{q:r.q.value.trim(),k:r.k.value.trim(),a:r.a.value.trim(),l:r.l.value}}).filter(function(x){return x.q&&x.a})}
+  function row(it,i){
+    var q=el('input',{class:'in-t',maxlength:'160','aria-label':'Question'}),k=el('input',{class:'in-t',maxlength:'240','aria-label':'Extra keywords'}),a=el('textarea',{class:'in-t',maxlength:'600',style:'min-height:86px','aria-label':'Answer'}),
+        l=el('select',{class:'in-t','aria-label':'Button',style:'background-color:#0b1020'},LK.map(function(o){var op=el('option',{value:o[0],text:o[1]});return op}));
+    q.value=it.q||'';k.value=it.k||'';a.value=it.a||'';l.value=it.l||'';rows.push({q:q,k:k,a:a,l:l});
+    var rm=el('button',{class:'btn btn-ghost btn-sm btn-danger',type:'button',text:'Remove'});
+    rm.addEventListener('click',function(){if(!rm.getAttribute('data-sure')){rm.setAttribute('data-sure','1');rm.textContent='Tap again';setTimeout(function(){rm.removeAttribute('data-sure');rm.textContent='Remove'},3500);return}
+      (async function(){var list=collect();list.splice(i,1);if(await persist(list)){STATE.faq=list;SA.redraw&&SA.redraw();renderAdmin();toast('Removed.')}})()});
+    return el('div',{class:'card a-card',style:'margin-top:16px'},
+      el('div',{class:'fld'},el('label',{text:'Question (visitors can tap this)'}),q),
+      el('div',{class:'fld',style:'margin-top:12px'},el('label',{text:'Answer. Use {phone} for your contact number'}),a),
+      el('div',{class:'fld',style:'margin-top:12px'},el('label',{text:'Extra words that should match this question (optional)'}),k),
+      el('div',{class:'fld',style:'margin-top:12px;max-width:260px'},el('label',{text:'Button under the answer'}),l),
+      el('div',{style:'margin-top:12px'},rm));
+  }
+  var list=el('div',null,items.map(row));
+  var add=el('button',{class:'btn btn-ghost btn-sm',type:'button',text:'Add a question',onclick:function(){var cur=collect();cur.push({q:'New question',k:'',a:'Write the answer here.',l:''});STATE.faq=cur;renderAdmin()}});
+  var save=el('button',{class:'btn btn-gold btn-sm',type:'button',text:'Save changes',onclick:async function(){var cur=collect();if(!cur.length){toast('Keep at least one question.');return}if(await persist(cur)){STATE.faq=cur;SA.redraw&&SA.redraw();toast('Support assistant updated.')}}});
+  var reset=el('button',{class:'btn btn-ghost btn-sm',type:'button',text:'Restore starter answers',onclick:async function(){var d=sdFaq();if(await persist(d)){STATE.faq=d;SA.redraw&&SA.redraw();renderAdmin();toast('Restored.')}}});
+  var ai=el('input',{class:'in-t',value:STATE.aiUrl||'',placeholder:'https://your-worker.workers.dev (optional)','aria-label':'AI chat address',autocomplete:'off'});
+  var aiSave=el('button',{class:'btn btn-ghost btn-sm',type:'button',text:'Save AI address',onclick:async function(){
+    var v=ai.value.trim();if(v&&!/^https:\/\//.test(v)){toast('The address must start with https://');return}
+    var old=STATE.aiUrl;STATE.aiUrl=v;if(await persist(STATE.faq)){toast(v?'AI chat connected.':'AI chat turned off.')}else STATE.aiUrl=old}});
+  var aiCard=el('div',{class:'card a-card',style:'margin-top:16px'},el('h3',{class:'ct gold',text:'Real AI answers (optional)'}),
+    el('p',{class:'cs',text:'When a visitor asks something the answers below do not cover, the assistant can ask a Claude AI service instead. This needs a small proxy that holds your API key, and the setup steps come with the worker.js file. Leave this empty to keep using only the answers below.'}),
+    el('div',{class:'fld'},el('label',{text:'AI chat address'}),ai),el('div',{style:'margin-top:12px'},aiSave));
+  return el('div',null,el('div',{class:'card a-card'},el('h3',{class:'ct gold',text:'Support assistant'}),
+    el('p',{class:'cs',text:'The chat bubble on every page answers visitors using the questions below. It picks the closest match to what a visitor types. The first four questions appear as tap buttons. If nothing matches, it points visitors to the Contact form and your phone number.'})),
+    aiCard,list,el('div',{style:'display:flex;gap:12px;flex-wrap:wrap;margin-top:20px'},save,add,reset));
+}
+initAssistant();
 var TP={cls:'all'};
 function tsession(){var e=sget('edum8:teacher');return e?(STATE.teachers.filter(function(t){return t.e===e})[0]||null):null}
 function renderTeacherPage(){
@@ -1195,6 +1339,7 @@ async function delItem(it){
 function inboxCard(it){
   var t=it.kind==='teacher',st=it.status||'new';
   var rows=t?[['Name',it.name],['Email',it.email],['Mobile',it.mobile],['Experience',it.exp?it.exp+' years':''],['Teaching role',it.role],['Classes',(it.classes||[]).join(', ')],['Working at',it.working],['Working email',it.wemail],['Proof',it.proofId?el('a',{href:'/_blob/'+it.proofId,target:'_blank',rel:'noopener noreferrer',text:it.proofName||'Open file'}):(it.proofName||'Not uploaded')]]
+            :it.kind==='unanswered'?[['Question',it.message],['Answered by',it.ai?'AI service':'Not answered']]
             :[['Name',it.name],['Email',it.email],['Phone',it.phone],['Class',it.cls],['Message',it.message]];
   var dl=el('dl',{class:'kv'});
   rows.forEach(function(r){if(r[1]===''||r[1]==null)return;dl.append(el('dt',{text:r[0]}),el('dd',null,r[1]))});
@@ -1230,17 +1375,18 @@ function inboxCard(it){
         el('div',{class:'acts',style:'margin-top:12px'},el('button',{class:'btn btn-ghost btn-sm',type:'button',text:'Copy details',onclick:function(){try{navigator.clipboard.writeText(txt).then(function(){toast('Copied.')},function(){toast('Select and copy the details above.')})}catch(e){toast('Select and copy the details above.')}}})));
     }
   }
+  if(it.kind==='unanswered')acts.append(el('button',{class:'btn btn-gold btn-sm',type:'button',text:'Add an answer',onclick:function(){ADM.faqNew=it.message;ADM.tab='faq';renderAdmin()}}));
   if(!t&&st==='new'){acts.append(el('button',{class:'btn btn-gold btn-sm',type:'button',text:'Mark as read',onclick:function(){setStatus(it,'read')}}))}
   acts.append(del);
   var label={new:'New',read:'Read',approved:'Approved',rejected:'Rejected'}[st]||st;
   return el('article',{class:'card inb'},
-    el('div',{class:'inb-h'},el('h4',{text:t?'Teacher access request':'Message'}),el('span',{class:'badge '+(st==='new'?'new':st==='approved'?'ok':st==='rejected'?'no':''),text:label}),hasLogin?el('span',{class:'badge ok',text:'Login active'}):null,el('time',{text:fmt(it.createdAt)})),dl,extra,acts);
+    el('div',{class:'inb-h'},el('h4',{text:t?'Teacher access request':it.kind==='unanswered'?'Unanswered question':'Message'}),el('span',{class:'badge '+(st==='new'?'new':st==='approved'?'ok':st==='rejected'?'no':''),text:label}),hasLogin?el('span',{class:'badge ok',text:'Login active'}):null,el('time',{text:fmt(it.createdAt)})),dl,extra,acts);
 }
 function tabInbox(){
-  var list=STATE.inbox.filter(function(i){return ADM.filter==='all'||i.kind===ADM.filter}).sort(function(a,b){return (b.createdAt||0)-(a.createdAt||0)});
+  var list=STATE.inbox.filter(function(i){return ADM.filter==='all'?i.kind!=='unanswered':i.kind===ADM.filter}).sort(function(a,b){return (b.createdAt||0)-(a.createdAt||0)});
   var wrap=el('div',null,
     el('div',{class:'mtabs',style:'justify-content:center;margin-top:0',role:'tablist'},
-      [['all','All'],['teacher','Teacher requests'],['contact','Messages']].map(function(f){return el('button',{type:'button',role:'tab','aria-selected':ADM.filter===f[0]?'true':'false',text:f[1],onclick:function(){ADM.filter=f[0];renderAdmin()}})})));
+      [['all','All'],['teacher','Teacher requests'],['contact','Messages'],['unanswered','Unanswered']].map(function(f){return el('button',{type:'button',role:'tab','aria-selected':ADM.filter===f[0]?'true':'false',text:f[1],onclick:function(){ADM.filter=f[0];renderAdmin()}})})));
   if(!list.length)wrap.append(el('div',{class:'card empty',text:'Nothing here yet. Messages and teacher requests sent from the site appear here.'}));
   list.forEach(function(it){wrap.append(inboxCard(it))});
   return wrap;
@@ -1268,7 +1414,7 @@ function authCard(){
     null);
 }
 function tabBackup(){
-  var c=STATE.cfg,exp={phone:c.phone,communityLinks:c.communityLinks||{},groupLinks:c.groupLinks||{},materials:{},formEndpoint:c.formEndpoint||'',teachers:STATE.teachers,teach:STATE.teach,announce:STATE.ann,texts:TX.map,adminHash:adminHash()};
+  var c=STATE.cfg,exp={phone:c.phone,communityLinks:c.communityLinks||{},groupLinks:c.groupLinks||{},materials:{},formEndpoint:c.formEndpoint||'',teachers:STATE.teachers,teach:STATE.teach,announce:STATE.ann,texts:TX.map,faq:STATE.faq,aiEndpoint:STATE.aiUrl||'',adminHash:adminHash()};
   [9,10,11,12].forEach(function(c){CATS.forEach(function(k){var it=itemsFor(c,k[2]);if(it.length)exp.materials[c+'_'+k[2]]=it})});
   var text='var SITE_DEFAULTS='+JSON.stringify(exp,null,2)+';';
   var ta=el('textarea',{class:'in-t',readonly:'readonly',rows:'10',style:'font-family:ui-monospace,Consolas,monospace;font-size:12px;min-height:200px','aria-label':'Settings to publish'});ta.value=text;
@@ -1290,6 +1436,7 @@ function tabBackup(){
           var keys=Object.keys(o.materials||{});for(var i=0;i<keys.length;i++){var v=o.materials[keys[i]],arr=Array.isArray(v)?v:(typeof v==='string'&&v?[{t:'Document',k:inferType(v),u:v}]:[]);if(arr.length&&keys[i].split('_').length===2)await STATE.db.doc('materials/'+keys[i]).set({items:arr})}
           if(Array.isArray(o.teachers))await STATE.db.doc('site/teachers').set({list:o.teachers});
           if(o.teach&&typeof o.teach==='object')await STATE.db.doc('site/teach').set({items:o.teach});
+          if(Array.isArray(o.faq)&&o.faq.length)await STATE.db.doc('site/faq').set({items:o.faq,ai:typeof o.aiEndpoint==='string'?o.aiEndpoint:''});
           if(o.texts&&typeof o.texts==='object')await STATE.db.doc('site/text').set({map:o.texts});
           if(o.announce&&typeof o.announce==='object')await STATE.db.doc('site/announce').set({showBoard:o.announce.showBoard!==false,marquee:o.announce.marquee||[],notices:o.announce.notices||[]});
           toast('Settings applied.');renderAdmin();
@@ -1302,7 +1449,7 @@ function startInbox(){
   if(inboxOn||!STATE.db)return;inboxOn=true;
   STATE.db.collection('inbox').onSnapshot(function(sn){
     var all=[];sn.docs.forEach(function(d){var its=(d.data()||{}).items||{};Object.keys(its).forEach(function(k){var o=Object.assign({},its[k]);o.uid=d.id;o.id=k;all.push(o)})});
-    STATE.inbox=all;var n=all.filter(function(i){return i.status==='new'}).length,b=$('#admCount');b.textContent=n;b.hidden=!n;
+    STATE.inbox=all;var n=all.filter(function(i){return i.status==='new'&&i.kind!=='unanswered'}).length,b=$('#admCount');b.textContent=n;b.hidden=!n;
     if(cur==='admin'&&ADM.tab==='inbox'&&STATE.isAdmin)renderAdmin();
   },function(){});
 }
@@ -1327,6 +1474,10 @@ async function initCaps(){
   STATE.db.doc('site/teachers').onSnapshot(function(sn){
     var d=sn.exists?sn.data():null;STATE.teachers=d&&Array.isArray(d.list)?d.list:(SITE_DEFAULTS.teachers||[]).slice();
     renderTeacherPage();if(cur==='admin'&&STATE.isAdmin&&ADM.tab==='teachers')renderAdmin();
+  },function(){});
+  STATE.db.doc('site/faq').onSnapshot(function(sn){
+    var d=sn.exists?sn.data():null;STATE.faq=d&&Array.isArray(d.items)&&d.items.length?d.items:(SITE_DEFAULTS.faq&&SITE_DEFAULTS.faq.length?SITE_DEFAULTS.faq:sdFaq());
+    STATE.aiUrl=d&&typeof d.ai==='string'?d.ai:(SITE_DEFAULTS.aiEndpoint||'');SA.redraw&&SA.redraw();
   },function(){});
   STATE.db.doc('site/text').onSnapshot(function(sn){
     var d=sn.exists?sn.data():null;TX.map=d&&d.map?d.map:Object.assign({},SITE_DEFAULTS.texts||{});txApply();
