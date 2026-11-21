@@ -965,15 +965,16 @@ $$('form[data-form]').forEach(function(f){f.addEventListener('submit',async func
     if(kind==='contact'){
       item={kind:'contact',name:$('#c-name').value.trim(),email:$('#c-email').value.trim(),phone:$('#c-phone').value.trim(),cls:$('#c-class').value,message:$('#c-msg').value.trim()};
     }else{
-      var file=$('#t-proof').files[0],proof=null;
+      var file=$('#t-proof').files[0],proof=null,proofData='';
       if(file&&STATE.assets){try{proof=(await STATE.assets.upload(file)).id}catch(err){}}
-      item={kind:'teacher',name:$('#t-name').value.trim(),email:$('#t-email').value.trim(),mobile:$('#t-mob').value.trim(),exp:$('#t-exp').value,role:(f.querySelector('[name=role]:checked')||{}).value||'',classes:$$('[name=cls]:checked',f).map(function(x){return x.value}),working:$('#t-work').value.trim(),wemail:$('#t-wemail').value.trim(),proofName:file?file.name:'',proofId:proof};
+      if(file&&!proof&&STATE.mode==='local'&&file.size<=600000){try{proofData=await new Promise(function(res,rej){var fr=new FileReader();fr.onload=function(){res(fr.result)};fr.onerror=rej;fr.readAsDataURL(file)})}catch(err){}}
+      item={kind:'teacher',name:$('#t-name').value.trim(),email:$('#t-email').value.trim(),mobile:$('#t-mob').value.trim(),exp:$('#t-exp').value,role:(f.querySelector('[name=role]:checked')||{}).value||'',classes:$$('[name=cls]:checked',f).map(function(x){return x.value}),working:$('#t-work').value.trim(),wemail:$('#t-wemail').value.trim(),proofName:file?file.name:'',proofId:proof,proofData:proofData};
     }
     var saved=false,sent=false;
     try{await addInbox(item);saved=true}catch(e1){}
     var ep=(STATE.cfg.formEndpoint||'').trim();
     if(ep&&/^https:\/\//i.test(ep)&&STATE.mode==='local'){
-      try{var fd=new FormData();Object.keys(item).forEach(function(k){if(k!=='proofId'&&k!=='status'&&k!=='createdAt')fd.append(k,Array.isArray(item[k])?item[k].join(', '):(item[k]==null?'':item[k]))});fd.append('form',kind);
+      try{var fd=new FormData();Object.keys(item).forEach(function(k){if(k!=='proofId'&&k!=='proofData'&&k!=='status'&&k!=='createdAt')fd.append(k,Array.isArray(item[k])?item[k].join(', '):(item[k]==null?'':item[k]))});fd.append('form',kind);
         var pf=$('#t-proof').files[0];if(kind==='access'&&pf)fd.append('proof',pf);
         var r=await fetch(ep,{method:'POST',body:fd,headers:{'Accept':'application/json'}});sent=r.ok}catch(e2){}
     }
@@ -1414,9 +1415,37 @@ async function delItem(it){
     Object.keys(old).forEach(function(k){if(k!==it.id)items[k]=old[k]});await ref.set({items:items});toast('Deleted.')}
   catch(e){toast('Could not delete. Please try again.')}
 }
+function proofView(it){
+  var name=it.proofName||'',src='',kind='';
+  var ext=(name.split('.').pop()||'').toLowerCase();
+  if(it.proofId){src='/_blob/'+it.proofId;kind=ext==='pdf'?'pdf':/^(png|jpe?g)$/.test(ext)?'img':''}
+  else if(typeof it.proofData==='string'){
+    var m=it.proofData.match(/^data:(image\/png|image\/jpeg|application\/pdf);base64,([A-Za-z0-9+\/=]+)$/);
+    if(m){kind=m[1]==='application/pdf'?'pdf':'img';
+      if(kind==='pdf'){try{var bin=atob(m[2]),u=new Uint8Array(bin.length);for(var i=0;i<bin.length;i++)u[i]=bin.charCodeAt(i);src=URL.createObjectURL(new Blob([u],{type:'application/pdf'}))}catch(e){src=''}}
+      else src=it.proofData}
+  }
+  if(!src)return name?el('span',{text:name+' (file was not saved, check your form email)'}):el('span',{text:'Not uploaded'});
+  var wrap=el('div',null),box=el('div',{style:'margin-top:12px;display:none'}),open=false;
+  var btn=el('button',{class:'btn btn-ghost btn-sm',type:'button',text:'Preview proof'}),
+      tab=el('a',{class:'btn btn-ghost btn-sm',href:src,target:'_blank',rel:'noopener noreferrer',text:'Open in new tab',style:'margin-left:8px'});
+  if(kind==='img'&&src.indexOf('data:')===0)tab.setAttribute('download',name||'proof');
+  btn.addEventListener('click',function(){
+    open=!open;btn.textContent=open?'Hide preview':'Preview proof';box.style.display=open?'block':'none';
+    if(open&&!box.firstChild){
+      var pv;
+      if(kind==='img'){pv=el('img',{alt:'Uploaded proof: '+name,style:'max-width:100%;max-height:70vh;display:block;border-radius:10px;border:1px solid var(--line);background:#fff'});pv.addEventListener('error',function(){box.textContent='Could not load the preview. Use Open in new tab.'});pv.src=src}
+      else if(kind==='pdf'){pv=el('iframe',{title:'Uploaded proof: '+name,src:src,style:'width:100%;height:70vh;border:1px solid var(--line);border-radius:10px;background:#fff'})}
+      else{pv=el('p',{class:'help',text:'This file type cannot be previewed here. Use Open in new tab.'})}
+      box.append(pv);
+    }
+  });
+  wrap.append(el('div',{style:'display:flex;flex-wrap:wrap;align-items:center;gap:8px'},el('span',{text:name||'Proof'}),btn,kind?tab:null),box);
+  return wrap;
+}
 function inboxCard(it){
   var t=it.kind==='teacher',st=it.status||'new';
-  var rows=t?[['Name',it.name],['Email',it.email],['Mobile',it.mobile],['Experience',it.exp?it.exp+' years':''],['Teaching role',it.role],['Classes',(it.classes||[]).join(', ')],['Working at',it.working],['Working email',it.wemail],['Proof',it.proofId?el('a',{href:'/_blob/'+it.proofId,target:'_blank',rel:'noopener noreferrer',text:it.proofName||'Open file'}):(it.proofName||'Not uploaded')]]
+  var rows=t?[['Name',it.name],['Email',it.email],['Mobile',it.mobile],['Experience',it.exp?it.exp+' years':''],['Teaching role',it.role],['Classes',(it.classes||[]).join(', ')],['Working at',it.working],['Working email',it.wemail],['Proof',proofView(it)]]
             :it.kind==='unanswered'?[['Question',it.message],['Answered by',it.ai?'AI service':'Not answered']]
             :[['Name',it.name],['Email',it.email],['Phone',it.phone],['Class',it.cls],['Message',it.message]];
   var dl=el('dl',{class:'kv'});
